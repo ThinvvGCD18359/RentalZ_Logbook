@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Form {
+  id      Int      @default(autoincrement()) @id
+  address   String    @unique
+  propertyType   String?
+  bedroom    String?
+  myDate  DateTime?
+  price   Int?
+  furniture   String?
+  note    String?
+  reporter    String?
+  notes   Note[]
+}
+
+model Note {
+  id      Int      @default(autoincrement()) @id
+  typeNote    String?
+  roomNote    String?
+  dateNote    String?
+  priceNote   String?
+  furnitureNote   String?
+  form    Form?  @relation(fields: [formId], references: [id]) 
+  formId  Int? 
+}
